@@ -5,7 +5,8 @@ import firebaseConfig from './firebase.config';
 import { useState, useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom'
 import { UserContext } from '../../App'
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn, MDBCard, MDBCardBody } from 'mdbreact';
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
+import { Redirect } from 'react-router-dom'
 
 
 firebase.initializeApp(firebaseConfig)
@@ -20,7 +21,7 @@ function Login() {
         photo: ''
     })
 
-    const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+    const { setLoggedInUser } = useContext(UserContext);
     const history = useHistory();
     const location = useLocation();
     let { from } = location.state || { from: { pathname: "/" } };
@@ -48,26 +49,9 @@ function Login() {
             })
     }
 
-    const handleSignOut = () => {
-        firebase.auth().signOut()
-            .then(res => {
-                const signedOutUser = {
-                    isSignedIn: false,
-                    name: '',
-                    email: '',
-                    photo: '',
-                    error: '',
-                    success: false
-                }
-                setUser(signedOutUser)
-                setLoggedInUser(signedOutUser)
-            })
-            .catch(err => {
 
-            })
-    }
     const handleOnBlur = (e) => {
-        console.log(e.target.name, e.target.value);
+        // console.log(e.target.name, e.target.value);
 
         let isFieldValid = true;
 
@@ -89,6 +73,7 @@ function Login() {
 
     }
     const handleSubmit = (e) => {
+        e.preventDefault();
         console.log(user.name, user.password)
         if (newUser && user.email && user.password) {
             firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
@@ -97,8 +82,11 @@ function Login() {
                     const newUserInfo = { ...user };
                     newUserInfo.error = '';
                     newUserInfo.success = true
+                    newUserInfo.isSignedIn = true;
                     setUser(newUserInfo);
-                    // ...
+                    setLoggedInUser(newUserInfo)
+                    history.replace(from);
+
                 })
                 .catch((error) => {
                     const newUserInfo = { ...user };
@@ -118,6 +106,8 @@ function Login() {
                     newUserInfo.error = '';
                     newUserInfo.success = true
                     setUser(newUserInfo);
+                    setLoggedInUser(newUserInfo)
+                    history.replace(from);
                     // ...
                 })
                 .catch((error) => {
@@ -127,7 +117,7 @@ function Login() {
                     setUser(newUserInfo);
                 });
         }
-        e.preventDefault();
+        // 
 
     }
     const handleGithubSignIn = () => {
@@ -162,33 +152,43 @@ function Login() {
             }
             <MDBContainer>
                 <MDBRow>
-                    <MDBCol md="6">
+                    <MDBCol md="5">
 
                         <form style={{ marginTop: "200px", marginLeft: '500px', width: '50%' }} onSubmit={handleSubmit} action="">
                             <div class="form-group">
-                                {newUser && <MDBInput label="Your name" icon="user" onBlur={handleOnBlur} group type="text" validate error="wrong"
+                                {newUser && <input type="text" className="form-control" name="name" onBlur={handleOnBlur} placeholder="name" />
+                                }
+                                <input type="email" className="form-control" name="email" onBlur={handleOnBlur} placeholder="email" />
+                                <input type="password" className="form-control" name="password" onBlur={handleOnBlur} placeholder="password" />
+
+                                {/* {newUser && <MDBInput label="Your name" icon="user" name="name" onBlur={handleOnBlur} group type="text" validate error="wrong"
                                     success="right" />}
-                                <MDBInput label="Your email" icon="envelope" group type="email" validate error="wrong"
-                                    success="right" />
+
+
+                                <MDBInput label="Your email" icon="envelope" name="email" onBlur={handleOnBlur} group type="email" validate error="wrong"
+                                    success="right" /> */}
                                 {/* <MDBInput type="text" className="form-control" name="email" onBlur={handleOnBlur} placeholder="email address" /> */}
-                                {/* <input type="password" className="form-control" name="password" onBlur={handleOnBlur} placeholder="password" /> */}
-                                <MDBInput label="Your password" icon="lock" onBlur={handleOnBlur} group type="password" validate />
+                                {/* <MDBInput label="Your password" icon="lock" name="password" onBlur={handleOnBlur} group type="password" validate /> */}
                             </div>
-                            <MDBBtn color="danger">Submit</MDBBtn>
+                            <input type="submit"></input>
                             <br />
-        
+
                             <input type="checkbox" onChange={() => setNewUser(!newUser)} name="newUser" id="" />
                             <label htmlFor="newUser">Create New Account</label>
-                            {user.success && <p style={{ color: 'green' }}>User {newUser ? 'created' : 'Logged In'} Successfully</p>}
+                        </form>
+                        {user.success && <p style={{ color: 'green' }}>User {newUser ? 'created' : 'Logged In'} Successfully</p>}
+                        
+
+                    </MDBCol>
+                </MDBRow>
+            </MDBContainer>
+            <div className="d-flex justify-content-center ml-6">
                             <MDBBtn color="primary" onClick={handleGoogleSignIn}>Sign In with Google</MDBBtn>
                             <br />
 
                             {/* <button className="btn-success" onClick={handleGithubSignIn}>Sign In With GitHub</button>  */}
                             <MDBBtn color="success" onClick={handleGithubSignIn}>Sign In With GitHub</MDBBtn>
-                        </form>
-                    </MDBCol>
-                </MDBRow>
-            </MDBContainer>
+                        </div>
 
         </div>
     );

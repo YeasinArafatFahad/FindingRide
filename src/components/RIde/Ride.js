@@ -4,7 +4,7 @@ import {UserContext} from '../../App'
 import './Ride.css'
 const Ride = (props) => {
     const { img } = props.ride
-     const { setData } = useContext(UserContext)
+     const {setData } = useContext(UserContext)
 
      const rideCLick = () => {
          setData(props.ride)

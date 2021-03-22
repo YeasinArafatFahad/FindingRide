@@ -8,31 +8,33 @@ const Header = () => {
     const { loggedInUser, setLoggedInUser } = useContext(UserContext)
 
     return (
-        <div className="header">
-            <nav className="nav">
-                <ul>
-                    <li>
-                        <img className="logo" alt="" />
-                    </li>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    {loggedInUser.isSignedIn ? (
+        <div className="container-fluid">
+            <div className="header ">
+                <nav className="nav">
+                    <ul>
                         <li>
-                            <Link onClick={() => setLoggedInUser({})}>Logout</Link>
-                            <Link to="/" className="mx-4">{loggedInUser.name}</Link>
+                            <img className="logo" alt="" />
                         </li>
-                    ) : (
+                        <li>
+                            <Link to="/">Home</Link>
+                        </li>
+                        {loggedInUser.isSignedIn ? (
+                            <li>
+                                <Link onClick={() => setLoggedInUser({})}>Logout</Link>
+                                <Link to="/" className="mx-4">{loggedInUser.name}</Link>
+                            </li>
+                        ) : (
                             <li>
                                 <Link to="/login">Login</Link>
                             </li>
                         )}
 
 
-                </ul>
-            </nav>
+                    </ul>
+                </nav>
 
 
+            </div>
         </div>
     );
 };

@@ -8,7 +8,7 @@ const Home = () => {
         setRide(data)
     }, [])
     return (
-        <div className="container rounded">
+        <div className="container">
             <div className="row d-flex align-items justify-content-center ">
                 {
                     rides.map(ride => <Ride ride={ride}></Ride>)

@@ -2,8 +2,6 @@
 import React, { useState, useContext } from 'react';
 import { UserContext } from '../../App'
 import GoogleMap from '../Map/Map'
-
-
 const RideSearch = () => {
     const { data } = useContext(UserContext)
     const [from, setFrom] = useState('')
@@ -16,8 +14,8 @@ const RideSearch = () => {
     }
     const searchClick = () => {
         setIsSearch(true);
-        console.log('gjksd')
         console.log(data)
+
     }
 
     return (
@@ -35,25 +33,43 @@ const RideSearch = () => {
                                         </div>
                                     </div>
                                     <div classname="mb-1">
-
+                                        <div class="d-flex justify-content-around align-items-center border border-primary border-1 rounded p-3">
+                                            <img style={{ width: '15%', height: '15%' }} class="card-img-top" src={data.img} alt="Card image cap"></img>
+                                            <h4>{data.seat}</h4>
+                                            <h4>${data.price}</h4>
+                                        </div>
+                                    </div>
+                                    <div classname="mb-1">
+                                        <div class="d-flex justify-content-around align-items-center border border-primary border-1 rounded p-3">
+                                            <img style={{ width: '15%', height: '15%' }} class="card-img-top" src={data.img} alt="Card image cap"></img>
+                                            <h4>{data.seat}</h4>
+                                            <h4>${data.price}</h4>
+                                        </div>
+                                    </div>
+                                    <div classname="mb-1">
+                                        <div class="d-flex justify-content-around align-items-center border border-primary border-1 rounded p-3">
+                                            <img style={{ width: '15%', height: '15%' }} class="card-img-top" src={data.img} alt="Card image cap"></img>
+                                            <h4>{data.seat}</h4>
+                                            <h4>${data.price}</h4>
+                                        </div>
                                     </div>
 
                                 </div>
 
                             ) : (
-                                    <div>
-                                        <div className="mb-3">
-                                            <input type="text" name="from" onChange={handleChange} className="form-control" placeholder="From..." />
-                                        </div>
-                                        <div className="mb-3">
-                                            <input type="text" name="to" onChange={handleChange} className="form-control" placeholder="To..." />
-                                        </div>
-                                        <div className="mb-3">
-                                            <button onClick={searchClick} className="btn btn-primary mx-auto">Search</button>
-                                        </div>
+                                <div>
+                                    <div className="mb-3">
+                                        <input type="text" name="from" onChange={handleChange} className="form-control" placeholder="From..." />
                                     </div>
+                                    <div className="mb-3">
+                                        <input type="text" name="to" onChange={handleChange} className="form-control" placeholder="To..." />
+                                    </div>
+                                    <div className="mb-3">
+                                        <button onClick={searchClick} className="btn btn-primary mx-auto">Search</button>
+                                    </div>
+                                </div>
 
-                                )}
+                            )}
 
                         </div>
                     </div>
