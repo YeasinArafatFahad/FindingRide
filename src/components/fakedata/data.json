@@ -1,0 +1,31 @@
+
+[{
+
+    "id":"1",
+    "img":"./Frame.png",
+    "seat": "1",
+    "price": "120"
+
+},
+{
+    "id":"2",
+    "img":"./Frame-2.png",
+    "seat": "3",
+    "price": "220"
+}, 
+{
+
+    "id":"3",
+    "img":"./Frame-1.png",
+    "seat": "20",
+    "price": "20"
+},
+{
+
+    "id":"4",
+    "img":"./Group.png",
+    "seat": "50",
+    "price": "500"
+}
+
+]
